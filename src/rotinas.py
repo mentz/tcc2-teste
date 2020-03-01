@@ -1,22 +1,8 @@
-def referencia(configuracao, network, hosts):
-  # Aceita argumentos:
-  # configuracao = 1, 2, 3
-  # network = (string de valor referente uma rede existente no docker)
-  # hosts = (objeto contendo os controladores Docker das 4 VMs)
-  h1 = hosts[0]
-  h2 = hosts[1]
-  h3 = hosts[2]
-  h4 = hosts[3]
-  if configuracao == 1:
-    # subir c1 e c2, rodar testes somente com eles
-    print(configuracao + ' com ' + network)
-    c1 = h1.containers.create('lucas/tcc:baseline', 'iperf3 -s')
-  elif configuracao == 2:
-    # subir c1, c2 e c3. iperf entre c1 e c2, enquanto c3 roda stressng em cpu
-    print(configuracao + ' com ' + network)
-  elif configuracao == 3:
-    # subir c1, c2, c3 e c4. iperf entre c1 e c2 enquanto iperf roda entre c3 e c4
-    print(configuracao + ' com ' + network)
-  else:
-    print(configuracao + ' com ' + network + '------- ERRO, INVÁLIDO')
-    return 0
+# Teste Referência, Configuração QUALQUER, Driver host
+def testeReferencia_1234_host(dh1, dh2, ip1, logMount):
+  c1 = dh1.containers.create(image="mentz/tcc:latest", network="host", command="iperf3 -s -p 8375")
+  c2 = dh2.containers.create(image="mentz/tcc:latest", network="host", command="iperf3 -c %s -p 8375" % ip1)
+  
+# Teste Referência, Configuração 1, Driver bridge
+# Teste Referência, Configuração 1, Driver macvlan
+# Teste Referência, Configuração 1, Driver overlay
