@@ -6,3 +6,4 @@ h2vm1 = "172.16.0.150"
 h2vm2 = "172.16.0.150"
 
 iperfTestDuration = 10
+sockperfTestDuration = 10
