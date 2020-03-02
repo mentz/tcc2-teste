@@ -51,7 +51,7 @@ for host in dhList:
 # Definir diretório corrente para criar Mounts de logs das execuções
 curDir = os.getcwd()
 
-for iteracao in range(20):
+for iteracao in range(1, 21):
   for driver in drivers:
     for (cfgIndex, cfg) in enumerate(configuracoes, start=1):
       # Somente o teste Tráfego de DC usa a quarta configuração
