@@ -1,3 +1,5 @@
+import time
+
 def purgeContainers(dockerClient):
   # Remover contêineres
   for ct in dockerClient.containers.list(all=True):
@@ -6,3 +8,9 @@ def purgeContainers(dockerClient):
 def purgeUserNetworks(dockerClient):
   # Remover redes de usuário
   dockerClient.networks.prune()
+  
+def timePrint(string):
+  now = time.localtime()
+  print('[%4d-%02d-%02d %2d:%02d:%02d] %s' %
+        (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min,
+         now.tm_sec, string))
