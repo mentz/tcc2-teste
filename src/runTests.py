@@ -28,7 +28,7 @@ cfg2 = [dh1, dh2, dh3, dh4]
 cfg3 = [dh1, dh5, dh2, dh6]
 cfg4 = [dh1, dh1, dh2, dh5]
 # configuracoes = [cfg1, cfg2, cfg3, cfg4]
-configuracoes = [cfg1]
+configuracoes = [cfg1, cfg2]
 
 # Limpeza dos Docker Hosts
 for host in dhList:
@@ -39,10 +39,30 @@ for host in dhList:
 
 # Preparação dos Docker Hosts (criação de redes)
 for host in dhList:
+  bridgeExists = False
+  macvlanExists = False
+  overlayExists = False
+  
   # Rede Bridge
-  host.docker.networks.create(name='tcc-bridge', driver='bridge')
+  for nw in host.docker.networks.list():
+    if (nw.name == config.nwName_bridge):
+      bridgeExists = True
+  if (not bridgeExists):
+    host.docker.networks.create(name=config.nwName_bridge, driver='bridge')
+    
   # Rede Macvlan
-  host.docker.networks.create(name='tcc-macvlan', driver='macvlan')
+  for nw in host.docker.networks.list():
+    if (nw.name == config.nwName_macvlan):
+      bridgeExists = True
+  if (not bridgeExists):
+    host.docker.networks.create(name=config.nwName_macvlan, driver='macvlan')
+    
+  # # Rede Overlay
+  # for nw in host.docker.networks.list():
+  #   if (nw.name == config.nwName_overlay):
+  #     bridgeExists = True
+  # if (not bridgeExists):
+  #   host.docker.networks.create(name=config.nwName_overlay, driver='overlay', scope='swarm')
 
 # Scripts para usar como referência
 # https://github.com/uktrade/docker-overlay-network-benchmark/tree/master/scripts
@@ -51,37 +71,33 @@ for host in dhList:
 # Definir diretório corrente para criar Mounts de logs das execuções
 curDir = os.getcwd()
 
-for iteracao in range(1, 21):
+for iteracao in range(1, config.iteracoes):
   for driver in drivers:
     for (cfgIndex, cfg) in enumerate(configuracoes, start=1):
       # Somente o teste Tráfego de DC usa a quarta configuração
       if (cfg != cfg4):
         # Teste Referência
-        print("--------------------------------------------")
-        print("REFERENCIA   , DRIVER %7s, CFG %d, ITERACAO %2d" % (driver, cfgIndex, iteracao))
+        print("[REFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]" % (driver, cfgIndex, iteracao))
         logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'referencia', driver, cfgIndex, iteracao)
         Path(logDir).mkdir(parents=True, exist_ok=True)
-        rotinas.referencia(driver, cfg, logDir)
+        rotinas.referencia(driver, cfgIndex, cfg, logDir)
         
       #   # Teste Interferência
-      #   print("--------------------------------------------")
-      #   print("INTERFERENCIA, DRIVER %7s, CFG %d, ITERACAO %2d" % (driver, cfgIndex, iteracao))
+      #   print("[INTERFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]" % (driver, cfgIndex, iteracao))
       #   logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'referencia', driver, cfgIndex, iteracao)
       #   Path(logDir).mkdir(parents=True, exist_ok=True)
-      #   rotinas.interferencia(driver, cfg, logDir)
+      #   rotinas.interferencia(driver, cfgIndex, cfg, logDir)
         
       #   # Teste Concorrência
-      #   print("--------------------------------------------")
-      #   print("CONCORRENCIA , DRIVER %7s, CFG %d, ITERACAO %2d" % (driver, cfgIndex, iteracao))
+      #   print("[CONCORRENCIA, DRIVER %s, CFG %d, ITERACAO %2d]" % (driver, cfgIndex, iteracao))
       #   logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'referencia', driver, cfgIndex, iteracao)
       #   Path(logDir).mkdir(parents=True, exist_ok=True)
-      #   rotinas.concorrencia(driver, cfg, logDir)
+      #   rotinas.concorrencia(driver, cfgIndex, cfg, logDir)
 
       # # Somente o teste Tráfego de DC usa a quarta configuração
       # else:
       #   # Teste Tráfego de DC
-      #   print("--------------------------------------------")
-      #   print("TRAFEGODC    , DRIVER %7s, CFG %d, ITERACAO %2d" % (driver, cfgIndex, iteracao))
+      #   print("[TRAFEGODC, DRIVER %s, CFG %d, ITERACAO %2d]" % (driver, cfgIndex, iteracao))
       #   logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'trafegoDC', driver, cfgIndex, iteracao)
       #   Path(logDir).mkdir(parents=True, exist_ok=True)
-      #   rotinas.trafegoDC(driver, cfg, logDir)
+      #   rotinas.trafegoDC(driver, cfgIndex, cfg, logDir)
