@@ -5,7 +5,7 @@ from utils import timePrint
 def rodar_host(dh1, dh2, logMount):
   #############################################################################
   # iPerf TCP
-  timePrint("Iniciando teste iPerf TCP")
+  timePrint("iPerf TCP - [STARTING]")
   c1 = dh1.docker.containers.run(
         image="mentz/tcc:latest",
         network="host",
@@ -26,18 +26,17 @@ def rodar_host(dh1, dh2, logMount):
   while c2.status != 'exited':
     time.sleep(1)
     c2.reload()
-  timePrint("Encerrando teste iPerf TCP")
+  timePrint("iPerf TCP - [DONE]")
   
   # Encerrar e eliminar contêineres
   c1.kill()
   c1.remove()
   c2.remove()
-  del(c1)
-  del(c2)
+  
   
   #############################################################################
   # iPerf UDP
-  timePrint("Iniciando teste iPerf UDP")
+  timePrint("iPerf UDP - [STARTING]")
   c1 = dh1.docker.containers.run(
         image="mentz/tcc:latest",
         network="host",
@@ -58,45 +57,326 @@ def rodar_host(dh1, dh2, logMount):
   while c2.status != 'exited':
     time.sleep(1)
     c2.reload()
-  timePrint("Encerrando teste iPerf UDP")
+  timePrint("iPerf UDP - [DONE]")
   
   # Encerrar e eliminar contêineres
   c1.kill()
   c1.remove()
   c2.remove()
-  del(c1)
-  del(c2)
   
   
   #############################################################################
-  # SockPerf Ping-Pong
-  # TODO Fazer funcionar sockperf
-  # timePrint("Iniciando teste SockPerf Ping-Pong")
-  # c1 = dh1.docker.containers.run(
-  #       image="mentz/tcc:latest",
-  #       network="host",
-  #       command="sockperf sr -p 11111",
-  #       detach=True)
+  # SockPerf Ping-Pong TCP
+  timePrint("SockPerf Ping-Pong TCP - [STARTING]")
+  c1 = dh1.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="sockperf server -p 11111 --tcp",
+        detach=True)
   
-  # c2 = dh2.docker.containers.run(
-  #       image="mentz/tcc:latest",
-  #       network="host",
-  #       command="sockperf -i %s -p 11111"
-  #         % (config.sockperfTestDuration, dh1.ipAddr),
-  #       mounts=[logMount],
-  #       detach=True)
+  c2 = dh2.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="sockperf pp -i %s -t %d --mps=100 --tcp -p 11111 --full-rtt --full-log /mnt/log/sockperf_pp_tcp.csv"
+          % (dh1.ipAddr, config.sockperfTestDuration),
+        mounts=[logMount],
+        detach=True)
   
-  # # Aguardar encerramento do teste
-  # time.sleep(config.sockperfTestDuration)
-  # c2.reload()
-  # while c2.status != 'exited':
-  #   time.sleep(1)
-  #   c2.reload()
-  # timePrint("Encerrando teste SockPerf Ping-Pong")
+  # Aguardar encerramento do teste
+  while c2.status != 'exited':
+    time.sleep(1)
+    c2.reload()
+  timePrint("SockPerf Ping-Pong TCP - [DONE]")
   
-  # # Encerrar e eliminar contêineres
-  # c1.kill()
-  # c1.remove()
-  # c2.remove()
-  # del(c1)
-  # del(c2)
+  # Encerrar e eliminar contêineres
+  c1.kill()
+  c1.remove()
+  c2.remove()
+  
+  
+  #############################################################################
+  # SockPerf Ping-Pong UDP
+  timePrint("SockPerf Ping-Pong UDP - [STARTING]")
+  c1 = dh1.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="sockperf server -p 11111",
+        detach=True)
+  
+  c2 = dh2.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="sockperf pp -i %s -t %d --mps=100 -p 11111 --full-rtt --full-log /mnt/log/sockperf_pp_udp.csv"
+          % (dh1.ipAddr, config.sockperfTestDuration),
+        mounts=[logMount],
+        detach=True)
+  
+  # Aguardar encerramento do teste
+  while c2.status != 'exited':
+    time.sleep(1)
+    c2.reload()
+  timePrint("SockPerf Ping-Pong UDP - [DONE]")
+  
+  # Encerrar e eliminar contêineres
+  c1.kill()
+  c1.remove()
+  c2.remove()
+
+
+
+def rodar_bridge_cfg1(dh1, dh2, logMount):
+  #############################################################################
+  # iPerf TCP
+  timePrint("iPerf TCP - [STARTING]")
+  c1 = dh1.docker.containers.run(
+        image="mentz/tcc:latest",
+        network=config.nwName_bridge,
+        command="iperf3 -s -p 5201",
+        detach=True)
+  # Obter endereço IP do contêiner
+  c1_inspect = dh1.docker.api.inspect_container(c1.id)
+  c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_bridge]['IPAddress']
+  
+  c2 = dh2.docker.containers.run(
+        image="mentz/tcc:latest",
+        network=config.nwName_bridge,
+        command="iperf3 -i 1 -t %d -c %s -p 5201 -J --logfile /mnt/log/iperf3_tcp.json"
+          % (config.iperfTestDuration, c1_ip),
+        mounts=[logMount],
+        detach=True)
+  
+  # Aguardar encerramento do teste
+  time.sleep(config.iperfTestDuration)
+  c2.reload()
+  while c2.status != 'exited':
+    time.sleep(1)
+    c2.reload()
+  timePrint("iPerf TCP  - [DONE]")
+  
+  # Encerrar e eliminar contêineres
+  c1.kill()
+  c1.remove()
+  c2.remove()
+  
+  
+  #############################################################################
+  # iPerf UDP
+  timePrint("iPerf UDP - [STARTING]")
+  c1 = dh1.docker.containers.run(
+        image="mentz/tcc:latest",
+        network=config.nwName_bridge,
+        command="iperf3 -s -p 5202",
+        detach=True)
+  # Obter endereço IP do contêiner
+  c1_inspect = dh1.docker.api.inspect_container(c1.id)
+  c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_bridge]['IPAddress']
+  
+  c2 = dh2.docker.containers.run(
+        image="mentz/tcc:latest",
+        network=config.nwName_bridge,
+        command="iperf3 -i 1 -b 0 -t %d -c %s -p 5202 -J --logfile /mnt/log/iperf3_udp.json"
+          % (config.iperfTestDuration, c1_ip),
+        mounts=[logMount],
+        detach=True)
+  
+  # Aguardar encerramento do teste
+  time.sleep(config.iperfTestDuration)
+  c2.reload()
+  while c2.status != 'exited':
+    time.sleep(1)
+    c2.reload()
+  timePrint("iPerf UDP - [DONE]")
+  
+  # Encerrar e eliminar contêineres
+  c1.kill()
+  c1.remove()
+  c2.remove()
+  
+  
+  #############################################################################
+  # SockPerf Ping-Pong TCP
+  timePrint("SockPerf Ping-Pong TCP - [STARTING]")
+  c1 = dh1.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="sockperf server -p 11111 --tcp",
+        detach=True)
+  # Obter endereço IP do contêiner
+  c1_inspect = dh1.docker.api.inspect_container(c1.id)
+  c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_bridge]['IPAddress']
+  
+  c2 = dh2.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="sockperf pp -i %s -t %d --mps=100 --tcp -p 11111 --full-rtt --full-log /mnt/log/sockperf_pp_tcp.csv"
+          % (c1_ip, config.sockperfTestDuration),
+        mounts=[logMount],
+        detach=True)
+  
+  # Aguardar encerramento do teste
+  while c2.status != 'exited':
+    time.sleep(1)
+    c2.reload()
+  timePrint("SockPerf Ping-Pong TCP - [DONE]")
+  
+  # Encerrar e eliminar contêineres
+  c1.kill()
+  c1.remove()
+  c2.remove()
+  
+  
+  #############################################################################
+  # SockPerf Ping-Pong UDP
+  timePrint("SockPerf Ping-Pong UDP - [STARTING]")
+  c1 = dh1.docker.containers.run(
+        image="mentz/tcc:latest",
+        network=config.nwName_bridge,
+        command="sockperf server -p 11111",
+        detach=True)
+  # Obter endereço IP do contêiner
+  c1_inspect = dh1.docker.api.inspect_container(c1.id)
+  c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_bridge]['IPAddress']
+  
+  c2 = dh2.docker.containers.run(
+        image="mentz/tcc:latest",
+        network=config.nwName_bridge,
+        command="sockperf pp -i %s -t %d --mps=100 -p 11111 --full-rtt --full-log /mnt/log/sockperf_pp_udp.csv"
+          % (c1_ip, config.sockperfTestDuration),
+        mounts=[logMount],
+        detach=True)
+  
+  # Aguardar encerramento do teste
+  while c2.status != 'exited':
+    time.sleep(1)
+    c2.reload()
+  timePrint("SockPerf Ping-Pong UDP - [DONE]")
+  
+  # Encerrar e eliminar contêineres
+  c1.kill()
+  c1.remove()
+  c2.remove()
+
+
+
+def rodar_bridge_cfg23(dh1, dh2, logMount):
+  #############################################################################
+  # iPerf TCP
+  timePrint("iPerf TCP - [STARTING]")
+  c1 = dh1.docker.containers.run(
+        image="mentz/tcc:latest",
+        network=config.nwName_bridge,
+        command="iperf3 -s -p 5201",
+        ports={'5201/tcp': 5201},
+        detach=True)
+  
+  c2 = dh2.docker.containers.run(
+        image="mentz/tcc:latest",
+        network=config.nwName_bridge,
+        command="iperf3 -i 1 -t %d -c %s -p 5201 -J --logfile /mnt/log/iperf3_tcp.json"
+          % (config.iperfTestDuration, dh1.ipAddr),
+        mounts=[logMount],
+        detach=True)
+  
+  # Aguardar encerramento do teste
+  time.sleep(config.iperfTestDuration)
+  c2.reload()
+  while c2.status != 'exited':
+    time.sleep(1)
+    c2.reload()
+  timePrint("iPerf TCP - [DONE]")
+  
+  # Encerrar e eliminar contêineres
+  c1.kill()
+  c1.remove()
+  c2.remove()
+  
+  
+  #############################################################################
+  # iPerf UDP
+  timePrint("iPerf UDP - [STARTING]")
+  c1 = dh1.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="iperf3 -s -p 5202",
+        ports={'5202/udp': 5202},
+        detach=True)
+  
+  c2 = dh2.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="iperf3 -i 1 -b 0 -t %d -c %s -p 5202 -J --logfile /mnt/log/iperf3_udp.json"
+          % (config.iperfTestDuration, dh1.ipAddr),
+        mounts=[logMount],
+        detach=True)
+  
+  # Aguardar encerramento do teste
+  time.sleep(config.iperfTestDuration)
+  c2.reload()
+  while c2.status != 'exited':
+    time.sleep(1)
+    c2.reload()
+  timePrint("iPerf UDP - [DONE]")
+  
+  # Encerrar e eliminar contêineres
+  c1.kill()
+  c1.remove()
+  c2.remove()
+  
+  
+  #############################################################################
+  # SockPerf Ping-Pong TCP
+  timePrint("SockPerf Ping-Pong TCP - [STARTING]")
+  c1 = dh1.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="sockperf server -p 11111 --tcp",
+        detach=True)
+  
+  c2 = dh2.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="sockperf pp -i %s -t %d --mps=100 --tcp -p 11111 --full-rtt --full-log /mnt/log/sockperf_pp_tcp.csv"
+          % (dh1.ipAddr, config.sockperfTestDuration),
+        mounts=[logMount],
+        detach=True)
+  
+  # Aguardar encerramento do teste
+  while c2.status != 'exited':
+    time.sleep(1)
+    c2.reload()
+  timePrint("SockPerf Ping-Pong TCP - [DONE]")
+  
+  # Encerrar e eliminar contêineres
+  c1.kill()
+  c1.remove()
+  c2.remove()
+  
+  
+  #############################################################################
+  # SockPerf Ping-Pong UDP
+  timePrint("SockPerf Ping-Pong UDP - [STARTING]")
+  c1 = dh1.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="sockperf server -p 11111",
+        detach=True)
+  
+  c2 = dh2.docker.containers.run(
+        image="mentz/tcc:latest",
+        network="host",
+        command="sockperf pp -i %s -t %d --mps=100 -p 11111 --full-rtt --full-log /mnt/log/sockperf_pp_udp.csv"
+          % (dh1.ipAddr, config.sockperfTestDuration),
+        mounts=[logMount],
+        detach=True)
+  
+  # Aguardar encerramento do teste
+  while c2.status != 'exited':
+    time.sleep(1)
+    c2.reload()
+  timePrint("SockPerf Ping-Pong UDP - [DONE]")
+  
+  # Encerrar e eliminar contêineres
+  c1.kill()
+  c1.remove()
+  c2.remove()
+ 
