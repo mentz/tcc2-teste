@@ -21,14 +21,13 @@ dh6 = DockerHost(config.h2vm2)
 dhList = [dh1, dh2, dh3, dh4, dh5, dh6]
 
 # Definições de variáveis para testes
-# drivers = ['host', 'bridge', 'macvlan', 'overlay']
-drivers = ['overlay']
+drivers = ['host', 'bridge', 'macvlan', 'overlay']
 cfg1 = [dh1, dh1, dh1, dh1]
 cfg2 = [dh1, dh2, dh3, dh4]
 cfg3 = [dh1, dh5, dh2, dh6]
 cfg4 = [dh1, dh1, dh2, dh5]
-# configuracoes = [cfg1, cfg2, cfg3, cfg4]
-configuracoes = [cfg1, cfg2, cfg3]
+configuracoes = [cfg1, cfg2, cfg3, cfg4]
+# configuracoes = [cfg1, cfg2, cfg3]
 
 # Limpeza dos Docker Hosts
 for host in dhList:
@@ -59,7 +58,7 @@ for (idx, host) in enumerate(dhList):
       name=config.nwName_macvlan,
       driver='macvlan',
       ipam=config.ipam_config[idx],
-      options={"parent": "ens3.352"})
+      options={"parent": "ens3"})
 
   # Rede Overlay
   for nw in host.docker.networks.list():
