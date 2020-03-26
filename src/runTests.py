@@ -22,7 +22,7 @@ dhList = [dh1, dh2, dh3, dh4, dh5, dh6]
 
 # Definições de variáveis para testes
 # drivers = ['host', 'bridge', 'macvlan', 'overlay']
-drivers = ['host', 'bridge', 'macvlan', 'overlay']
+drivers = ['overlay']
 cfg1 = [dh1, dh1, dh1, dh1]
 cfg2 = [dh1, dh2, dh3, dh4]
 cfg3 = [dh1, dh5, dh2, dh6]
@@ -39,7 +39,7 @@ for host in dhList:
 
 # Preparação dos Docker Hosts (criação de redes)
 overlayExists = False
-for host in dhList:
+for (idx, host) in enumerate(dhList):
   bridgeExists = False
   macvlanExists = False
 
@@ -55,7 +55,11 @@ for host in dhList:
     if (nw.name == config.nwName_macvlan):
       macvlanExists = True
   if (not macvlanExists):
-    host.docker.networks.create(name=config.nwName_macvlan, driver='macvlan')
+    host.docker.networks.create(
+      name=config.nwName_macvlan,
+      driver='macvlan',
+      ipam=config.ipam_config[idx],
+      options={"parent": "ens3.352"})
 
   # Rede Overlay
   for nw in host.docker.networks.list():
@@ -64,7 +68,10 @@ for host in dhList:
 
 # Criar rede Overlay (uma para todos os hosts)
 if (not overlayExists):
-  dh1.docker.networks.create(name=config.nwName_overlay, driver='overlay', scope='swarm')
+  dh1.docker.networks.create(
+    name=config.nwName_overlay,
+    driver='overlay',
+    attachable=True)
 
 # Scripts para usar como referência
 # https://github.com/uktrade/docker-overlay-network-benchmark/tree/master/scripts
@@ -73,7 +80,7 @@ if (not overlayExists):
 # Definir diretório corrente para criar Mounts de logs das execuções
 curDir = os.getcwd()
 
-for iteracao in range(1, config.iteracoes):
+for iteracao in range(1, config.iteracoes + 1):
   for driver in drivers:
     for (cfgIndex, cfg) in enumerate(configuracoes, start=1):
       # Somente o teste Tráfego de DC usa a quarta configuração
