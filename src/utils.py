@@ -14,3 +14,13 @@ def timePrint(string):
   print('[%4d-%02d-%02d %2d:%02d:%02d] %s' %
         (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min,
          now.tm_sec, string))
+
+def waitThenCleanup(client, server):
+  client.reload()
+  while client.status != 'exited':
+    time.sleep(1)
+    client.reload()
+  # Encerrar e eliminar contêineres
+  server.kill()
+  server.remove()
+  client.remove()
