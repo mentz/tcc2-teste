@@ -12,12 +12,12 @@ class DockerHost:
 
 # Definição de clientes Docker (controle dos hosts Docker, um em cada VM)
 # Documentação em https://docker-py.readthedocs.io/en/stable/client.html
-dh1 = DockerHost(config.h1vm1)
-dh2 = DockerHost(config.h1vm2)
-dh3 = DockerHost(config.h1vm3)
-dh4 = DockerHost(config.h1vm4)
-dh5 = DockerHost(config.h2vm1)
-dh6 = DockerHost(config.h2vm2)
+dh1 = DockerHost(config.hosts[0]['ip'])
+dh2 = DockerHost(config.hosts[1]['ip'])
+dh3 = DockerHost(config.hosts[2]['ip'])
+dh4 = DockerHost(config.hosts[3]['ip'])
+dh5 = DockerHost(config.hosts[4]['ip'])
+dh6 = DockerHost(config.hosts[5]['ip'])
 dhList = [dh1, dh2, dh3, dh4, dh5, dh6]
 
 # Definições de variáveis para testes
@@ -26,8 +26,8 @@ cfg1 = [dh1, dh1, dh1, dh1]
 cfg2 = [dh1, dh2, dh3, dh4]
 cfg3 = [dh1, dh5, dh2, dh6]
 cfg4 = [dh1, dh1, dh2, dh5]
-configuracoes = [cfg1, cfg2, cfg3, cfg4]
-# configuracoes = [cfg1, cfg2, cfg3]
+# configuracoes = [cfg1, cfg2, cfg3, cfg4]
+configuracoes = [cfg1, cfg2, cfg3]
 
 # Limpeza dos Docker Hosts
 for host in dhList:
@@ -58,7 +58,7 @@ for (idx, host) in enumerate(dhList):
       name=config.nwName_macvlan,
       driver='macvlan',
       ipam=config.ipam_config[idx],
-      options={"parent": "ens3"})
+      options={'parent': config.hosts[idx]['eth_interface']})
 
   # Rede Overlay
   for nw in host.docker.networks.list():
@@ -85,23 +85,23 @@ for iteracao in range(1, config.iteracoes + 1):
       # Somente o teste Tráfego de DC usa a quarta configuração
       if (cfg != cfg4):
         # Teste Referência
-        print("[REFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]" % (driver, cfgIndex, iteracao))
+        print('[REFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
         logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'referencia', driver, cfgIndex, iteracao)
         rotinas.referencia(driver, cfgIndex, cfg, logDir)
 
         # Teste Interferência
-      #   print("[INTERFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]" % (driver, cfgIndex, iteracao))
+      #   print('[INTERFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
         logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'referencia', driver, cfgIndex, iteracao)
       #   rotinas.interferencia(driver, cfgIndex, cfg, logDir)
 
         # Teste Concorrência
-      #   print("[CONCORRENCIA, DRIVER %s, CFG %d, ITERACAO %2d]" % (driver, cfgIndex, iteracao))
+      #   print('[CONCORRENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
         logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'referencia', driver, cfgIndex, iteracao)
       #   rotinas.concorrencia(driver, cfgIndex, cfg, logDir)
 
       # # Somente o teste Tráfego de DC usa a quarta configuração
       else:
       #   # Teste Tráfego de DC
-      #   print("[TRAFEGODC, DRIVER %s, CFG %d, ITERACAO %2d]" % (driver, cfgIndex, iteracao))
+      #   print('[TRAFEGODC, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
         logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'trafegoDC', driver, cfgIndex, iteracao)
       #   rotinas.trafegoDC(driver, cfgIndex, cfg, logDir)

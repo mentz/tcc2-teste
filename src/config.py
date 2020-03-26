@@ -1,15 +1,17 @@
 import docker
 
-h1vm1 = "172.16.25.15"
-h1vm2 = "172.16.25.12"
-h1vm3 = "172.16.25.16"
-h1vm4 = "172.16.25.13"
-h2vm1 = "172.16.25.14"
-h2vm2 = "172.16.25.17"
+hosts = [{'ip': '172.16.25.15', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.12', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.16', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.13', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.14', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.17', 'eth_interface': 'ens3'}]
 
 iteracoes = 1
 iperfTestDuration = 10
 sockperfTestDuration = 10
+
+
 
 ###
 # Evite fazer modificações além daqui
