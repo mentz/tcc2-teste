@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 arg=${1-normal}
 
