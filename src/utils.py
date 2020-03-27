@@ -15,12 +15,24 @@ def timePrint(string):
         (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min,
          now.tm_sec, string))
 
-def waitThenCleanup(client, server):
-  client.reload()
-  while client.status != 'exited':
+def waitThenCleanup(ct1, ct2):
+  ct1.reload()
+  while ct1.status != 'exited':
     time.sleep(1)
-    client.reload()
+    ct1.reload()
   # Encerrar e eliminar contêineres
-  server.kill()
-  server.remove()
-  client.remove()
+  ct2.kill()
+  ct2.remove()
+  ct1.remove()
+
+def waitThenCleanup3(ct1, ct2, ct3):
+  ct1.reload()
+  while ct1.status != 'exited':
+    time.sleep(1)
+    ct1.reload()
+  # Encerrar e eliminar contêineres
+  ct3.kill()
+  ct3.remove()
+  ct2.kill()
+  ct2.remove()
+  ct1.remove()
