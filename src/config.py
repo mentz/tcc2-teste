@@ -8,8 +8,7 @@ hosts = [{'ip': '172.16.25.15', 'eth_interface': 'ens3'},
          {'ip': '172.16.25.17', 'eth_interface': 'ens3'}]
 
 iteracoes = 1
-iperfTestDuration = 10
-sockperfTestDuration = 10
+testDuration = 10
 
 
 
