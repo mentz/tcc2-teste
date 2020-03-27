@@ -90,13 +90,13 @@ for iteracao in range(1, config.iteracoes + 1):
         rotinas.referencia(driver, cfgIndex, cfg, logDir)
 
         # Teste Interferência
-      #   print('[INTERFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
-        logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'referencia', driver, cfgIndex, iteracao)
-      #   rotinas.interferencia(driver, cfgIndex, cfg, logDir)
+        print('[INTERFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
+        logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'interferencia', driver, cfgIndex, iteracao)
+        rotinas.interferencia(driver, cfgIndex, cfg, logDir)
 
         # Teste Concorrência
       #   print('[CONCORRENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
-        logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'referencia', driver, cfgIndex, iteracao)
+        logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'concorrencia', driver, cfgIndex, iteracao)
       #   rotinas.concorrencia(driver, cfgIndex, cfg, logDir)
 
       # # Somente o teste Tráfego de DC usa a quarta configuração
