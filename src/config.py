@@ -1,15 +1,14 @@
 import docker
 
-hosts = [{'ip': '172.16.25.15', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.12', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.16', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.13', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.14', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.17', 'eth_interface': 'ens3'}]
+hosts = [{'ip': '172.16.0.181', 'eth_interface': 'eth0'},
+         {'ip': '172.16.0.182', 'eth_interface': 'eth0'},
+         {'ip': '172.16.0.183', 'eth_interface': 'eth0'},
+         {'ip': '172.16.0.184', 'eth_interface': 'eth0'},
+         {'ip': '172.16.0.185', 'eth_interface': 'eth0'},
+         {'ip': '172.16.0.186', 'eth_interface': 'eth0'}]
 
-iteracoes = 1
-testDuration = 10
-
+iteracoes = 20
+testDuration = 120
 
 
 ###
