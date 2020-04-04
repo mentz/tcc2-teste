@@ -9,7 +9,7 @@ def rodar_host(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -38,7 +38,7 @@ def rodar_host(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -67,7 +67,7 @@ def rodar_host(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -95,7 +95,7 @@ def rodar_host(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -125,7 +125,7 @@ def rodar_bridge_cfg1(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -157,7 +157,7 @@ def rodar_bridge_cfg1(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -189,7 +189,7 @@ def rodar_bridge_cfg1(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -220,7 +220,7 @@ def rodar_bridge_cfg1(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -253,7 +253,7 @@ def rodar_bridge_cfg23(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -283,7 +283,7 @@ def rodar_bridge_cfg23(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -313,7 +313,7 @@ def rodar_bridge_cfg23(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -341,7 +341,7 @@ def rodar_bridge_cfg23(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -373,7 +373,7 @@ def rodar_macvlan(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -405,7 +405,7 @@ def rodar_macvlan(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -437,7 +437,7 @@ def rodar_macvlan(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -468,7 +468,7 @@ def rodar_macvlan(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -503,7 +503,7 @@ def rodar_overlay(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -535,7 +535,7 @@ def rodar_overlay(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -567,7 +567,7 @@ def rodar_overlay(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
@@ -598,7 +598,7 @@ def rodar_overlay(cliente, servidor, interferencia, logDir):
   hog = interferencia.docker.containers.run(
         image="mentz/tcc:latest",
         network='none',
-        command="stress-ng --cpu 1 -t %d" % (config.testDuration * 2),
+        command="stress-ng --cpu 2 -t %d" % (config.testDuration * 2),
         detach=True)
 
   c1 = servidor.docker.containers.run(
