@@ -7,7 +7,7 @@ hosts = [{'ip': '172.16.0.181', 'eth_interface': 'eth0'},
          {'ip': '172.16.0.185', 'eth_interface': 'eth0'},
          {'ip': '172.16.0.186', 'eth_interface': 'eth0'}]
 
-iteracoes = 20
+iteracoes = 1
 testDuration = 120
 
 
