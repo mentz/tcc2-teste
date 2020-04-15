@@ -103,7 +103,6 @@ def rodar_bridge_cfg1(cliente, servidor, logDir):
         network=config.nwName_bridge,
         command="iperf3 -s -p 5201",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_bridge]['IPAddress']
@@ -130,7 +129,6 @@ def rodar_bridge_cfg1(cliente, servidor, logDir):
         network=config.nwName_bridge,
         command="iperf3 -s -p 5202",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_bridge]['IPAddress']
@@ -157,7 +155,6 @@ def rodar_bridge_cfg1(cliente, servidor, logDir):
         network=config.nwName_bridge,
         command="sockperf server -p 11111 --tcp",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_bridge]['IPAddress']
@@ -183,7 +180,6 @@ def rodar_bridge_cfg1(cliente, servidor, logDir):
         network=config.nwName_bridge,
         command="sockperf server -p 11111",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_bridge]['IPAddress']
@@ -307,7 +303,6 @@ def rodar_macvlan(cliente, servidor, logDir):
         network=config.nwName_macvlan,
         command="iperf3 -s -p 5201",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_macvlan]['IPAddress']
@@ -334,7 +329,6 @@ def rodar_macvlan(cliente, servidor, logDir):
         network=config.nwName_macvlan,
         command="iperf3 -s -p 5202",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_macvlan]['IPAddress']
@@ -361,7 +355,6 @@ def rodar_macvlan(cliente, servidor, logDir):
         network=config.nwName_macvlan,
         command="sockperf server -p 11111 --tcp",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_macvlan]['IPAddress']
@@ -387,7 +380,6 @@ def rodar_macvlan(cliente, servidor, logDir):
         network=config.nwName_macvlan,
         command="sockperf server -p 11111",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_macvlan]['IPAddress']
@@ -417,7 +409,6 @@ def rodar_overlay(cliente, servidor, logDir):
         network=config.nwName_overlay,
         command="iperf3 -s -p 5201",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_overlay]['IPAddress']
@@ -444,7 +435,6 @@ def rodar_overlay(cliente, servidor, logDir):
         network=config.nwName_overlay,
         command="iperf3 -s -p 5202",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_overlay]['IPAddress']
@@ -471,7 +461,6 @@ def rodar_overlay(cliente, servidor, logDir):
         network=config.nwName_overlay,
         command="sockperf server -p 11111 --tcp",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_overlay]['IPAddress']
@@ -497,7 +486,6 @@ def rodar_overlay(cliente, servidor, logDir):
         network=config.nwName_overlay,
         command="sockperf server -p 11111",
         detach=True)
-  time.sleep(1)
   # Obter endereço IP do contêiner
   c1_inspect = servidor.docker.api.inspect_container(c1.id)
   c1_ip = c1_inspect['NetworkSettings']['Networks'][config.nwName_overlay]['IPAddress']

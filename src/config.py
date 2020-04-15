@@ -1,5 +1,4 @@
-import docker
-
+# Os parâmetros abaixo devem ser ajustados para conformar ao seu setup
 hosts = [{'ip': '172.16.0.181', 'eth_interface': 'eth0'},
          {'ip': '172.16.0.182', 'eth_interface': 'eth0'},
          {'ip': '172.16.0.183', 'eth_interface': 'eth0'},
@@ -7,13 +6,16 @@ hosts = [{'ip': '172.16.0.181', 'eth_interface': 'eth0'},
          {'ip': '172.16.0.185', 'eth_interface': 'eth0'},
          {'ip': '172.16.0.186', 'eth_interface': 'eth0'}]
 
-iteracoes = 1
-testDuration = 120
-
+# Os parâmetros abaixo modificam as variáveis dos testes
+iteracoes = 20
+testDuration = 5
+bgBefore = 5
+bgAfter = 5
 
 ###
 # Evite fazer modificações além daqui
 ###
+import docker
 
 nwName_bridge = 'tcc-bridge'
 nwName_macvlan = 'tcc-macvlan'
