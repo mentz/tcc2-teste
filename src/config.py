@@ -1,16 +1,16 @@
 # Os parâmetros abaixo devem ser ajustados para conformar ao seu setup
-hosts = [{'ip': '172.16.0.181', 'eth_interface': 'eth0'},
-         {'ip': '172.16.0.182', 'eth_interface': 'eth0'},
-         {'ip': '172.16.0.183', 'eth_interface': 'eth0'},
-         {'ip': '172.16.0.184', 'eth_interface': 'eth0'},
-         {'ip': '172.16.0.185', 'eth_interface': 'eth0'},
-         {'ip': '172.16.0.186', 'eth_interface': 'eth0'}]
+hosts = [{'ip': '172.16.25.15', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.12', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.16', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.13', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.14', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.17', 'eth_interface': 'ens3'}]
 
 # Os parâmetros abaixo modificam as variáveis dos testes
-iteracoes = 2
-testDuration = 5
-bgBefore = 5
-bgAfter = 5
+iteracoes = 1
+testDuration = 1
+bgBefore = 1
+bgAfter = 1
 
 ###
 # Evite fazer modificações além daqui
