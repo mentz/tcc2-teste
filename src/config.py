@@ -7,7 +7,7 @@ hosts = [{'ip': '172.16.0.181', 'eth_interface': 'eth0'},
          {'ip': '172.16.0.186', 'eth_interface': 'eth0'}]
 
 # Os parâmetros abaixo modificam as variáveis dos testes
-iteracoes = 20
+iteracoes = 2
 testDuration = 5
 bgBefore = 5
 bgAfter = 5

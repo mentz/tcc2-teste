@@ -17,9 +17,10 @@ def rodar_host(cliente, servidor, bgcliente, bgservidor, logDir):
         network="host",
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg1_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bgservidor.ipAddr),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
 
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -55,9 +56,10 @@ def rodar_host(cliente, servidor, bgcliente, bgservidor, logDir):
         network="host",
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg2_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bgservidor.ipAddr),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
 
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -93,9 +95,10 @@ def rodar_host(cliente, servidor, bgcliente, bgservidor, logDir):
         network="host",
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg3_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bgservidor.ipAddr),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
         
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -130,9 +133,10 @@ def rodar_host(cliente, servidor, bgcliente, bgservidor, logDir):
         network="host",
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg4_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bgservidor.ipAddr),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
 
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -172,9 +176,10 @@ def rodar_bridge_cfg1(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_bridge,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg1_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
 
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -216,9 +221,10 @@ def rodar_bridge_cfg1(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_bridge,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg2_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
 
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -260,9 +266,10 @@ def rodar_bridge_cfg1(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_bridge,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg3_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
         
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -303,9 +310,10 @@ def rodar_bridge_cfg1(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_bridge,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg4_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
         
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -346,9 +354,10 @@ def rodar_bridge_cfg23(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_bridge,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg1_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bgservidor.ipAddr),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
 
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -386,9 +395,10 @@ def rodar_bridge_cfg23(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_bridge,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg2_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bgservidor.ipAddr),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
 
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -426,9 +436,10 @@ def rodar_bridge_cfg23(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_bridge,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg3_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bgservidor.ipAddr),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
 
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -464,9 +475,10 @@ def rodar_bridge_cfg23(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_bridge,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg4_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bgservidor.ipAddr),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
 
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -508,9 +520,10 @@ def rodar_macvlan(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_macvlan,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg1_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
   
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -552,9 +565,10 @@ def rodar_macvlan(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_macvlan,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg2_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
   
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -596,9 +610,10 @@ def rodar_macvlan(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_macvlan,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg3_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
   
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -639,9 +654,10 @@ def rodar_macvlan(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_macvlan,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg4_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
   
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -686,9 +702,10 @@ def rodar_overlay(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_overlay,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg1_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
   
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -730,9 +747,10 @@ def rodar_overlay(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_overlay,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg2_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
   
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -774,9 +792,10 @@ def rodar_overlay(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_overlay,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg3_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
   
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
@@ -817,9 +836,10 @@ def rodar_overlay(cliente, servidor, bgcliente, bgservidor, logDir):
         network=config.nwName_overlay,
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg4_iperf3_tcp.json"
         command="iperf3 -i 1 -t %d -c %s -p 5211"
-          % (config.testDuration + 15, bc1_ip),
+          % (config.testDuration + config.bgBefore + config.bgAfter, bc1_ip),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
+  time.sleep(config.bgBefore)
   
   c1 = servidor.docker.containers.run(
         image="mentz/tcc:latest",
