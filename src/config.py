@@ -1,10 +1,10 @@
 # Os parâmetros abaixo devem ser ajustados para conformar ao seu setup
-hosts = [{'ip': '172.16.25.15', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.12', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.16', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.13', 'eth_interface': 'ens3'},
+hosts = [{'ip': '172.16.25.12', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.17', 'eth_interface': 'ens3'},
          {'ip': '172.16.25.14', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.17', 'eth_interface': 'ens3'}]
+         {'ip': '172.16.25.16', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.15', 'eth_interface': 'ens3'},
+         {'ip': '172.16.25.18', 'eth_interface': 'ens3'}]
 
 # Os parâmetros abaixo modificam as variáveis dos testes
 iteracoes = 1
