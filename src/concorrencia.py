@@ -19,7 +19,6 @@ def rodar_host(cliente, servidor, bgcliente, bgservidor, logDir):
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg1_iperf3_tcp.json"
       command="iperf3 -i 1 -t %d -c %s -p 5211"
       % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
-      volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
       detach=True)
   time.sleep(config.bgBefore)
 
@@ -57,7 +56,6 @@ def rodar_host(cliente, servidor, bgcliente, bgservidor, logDir):
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg2_iperf3_tcp.json"
       command="iperf3 -i 1 -t %d -c %s -p 5211"
       % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
-      volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
       detach=True)
   time.sleep(config.bgBefore)
 
@@ -95,7 +93,6 @@ def rodar_host(cliente, servidor, bgcliente, bgservidor, logDir):
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg3_iperf3_tcp.json"
       command="iperf3 -i 1 -t %d -c %s -p 5211"
       % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
-      volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
       detach=True)
   time.sleep(config.bgBefore)
 
@@ -132,7 +129,6 @@ def rodar_host(cliente, servidor, bgcliente, bgservidor, logDir):
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg4_iperf3_tcp.json"
       command="iperf3 -i 1 -t %d -c %s -p 5211"
       % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
-      volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
       detach=True)
   time.sleep(config.bgBefore)
 
@@ -348,7 +344,6 @@ def rodar_bridge_cfg23(cliente, servidor, bgcliente, bgservidor, logDir):
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg1_iperf3_tcp.json"
       command="iperf3 -i 1 -t %d -c %s -p 5211"
       % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
-      volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
       detach=True)
   time.sleep(config.bgBefore)
 
@@ -388,7 +383,6 @@ def rodar_bridge_cfg23(cliente, servidor, bgcliente, bgservidor, logDir):
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg2_iperf3_tcp.json"
       command="iperf3 -i 1 -t %d -c %s -p 5211"
       % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
-      volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
       detach=True)
   time.sleep(config.bgBefore)
 
@@ -428,7 +422,6 @@ def rodar_bridge_cfg23(cliente, servidor, bgcliente, bgservidor, logDir):
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg3_iperf3_tcp.json"
       command="iperf3 -i 1 -t %d -c %s -p 5211"
       % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
-      volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
       detach=True)
   time.sleep(config.bgBefore)
 
@@ -466,7 +459,6 @@ def rodar_bridge_cfg23(cliente, servidor, bgcliente, bgservidor, logDir):
       #   command="iperf3 -i 1 -t %d -c %s -p 5211 -J --logfile /mnt/log/bg4_iperf3_tcp.json"
       command="iperf3 -i 1 -t %d -c %s -p 5211"
       % (config.testDuration + config.bgBefore + config.bgAfter, bgservidor.ipAddr),
-      volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
       detach=True)
   time.sleep(config.bgBefore)
 
@@ -487,7 +479,6 @@ def rodar_bridge_cfg23(cliente, servidor, bgcliente, bgservidor, logDir):
   # Aguardar encerramento do teste
   waitThenCleanup4(bc2, bc1, c2, c1)
   timePrint("SockPerf Ping-Pong UDP [DONE]")
-
 
 
 def rodar_macvlan(cliente, servidor, bgcliente, bgservidor, logDir):
@@ -664,7 +655,6 @@ def rodar_macvlan(cliente, servidor, bgcliente, bgservidor, logDir):
   # Aguardar encerramento do teste
   waitThenCleanup4(bc2, bc1, c2, c1)
   timePrint("SockPerf Ping-Pong UDP [DONE]")
-
 
 
 def rodar_overlay(cliente, servidor, bgcliente, bgservidor, logDir):
