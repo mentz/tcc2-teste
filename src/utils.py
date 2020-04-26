@@ -25,6 +25,7 @@ def waitThenCleanup(ct1, ct2):
     time.sleep(1)
     ct1.reload()
   # Encerrar e eliminar contêineres
+  time.sleep(1)
   ct2.remove(force=True)
   ct1.remove()
   time.sleep(1)
@@ -36,6 +37,7 @@ def waitThenCleanup3(ct1, ct2, ct3):
     time.sleep(1)
     ct1.reload()
   # Encerrar e eliminar contêineres
+  time.sleep(1)
   ct3.remove(force=True)
   ct2.remove(force=True)
   ct1.remove()
@@ -48,6 +50,7 @@ def waitThenCleanup4(ct1, ct2, ct3, ct4):
     time.sleep(1)
     ct1.reload()
   # Encerrar e eliminar contêineres
+  time.sleep(1)
   ct4.remove(force=True)
   ct3.remove(force=True)
   ct2.remove(force=True)

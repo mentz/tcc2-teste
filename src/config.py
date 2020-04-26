@@ -9,7 +9,7 @@ hosts = [{'ip': '172.16.25.12', 'eth_interface': 'ens3'},
 
 # Os parâmetros abaixo modificam as variáveis dos testes
 iteracoes = 1
-testDuration = 5
+testDuration = 7
 bgBefore = 2
 bgAfter = 2
 
