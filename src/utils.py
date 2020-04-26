@@ -1,19 +1,23 @@
 import time
 
+
 def purgeContainers(dockerClient):
   # Remover contêineres
   for ct in dockerClient.containers.list(all=True):
     ct.remove(force=True)
 
+
 def purgeUserNetworks(dockerClient):
   # Remover redes de usuário
   dockerClient.networks.prune()
-  
+
+
 def timePrint(string):
   now = time.localtime()
   print('[%4d-%02d-%02d %2d:%02d:%02d] %s' %
         (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min,
          now.tm_sec, string))
+
 
 def waitThenCleanup(ct1, ct2):
   ct1.reload()
@@ -25,6 +29,7 @@ def waitThenCleanup(ct1, ct2):
   ct1.remove()
   time.sleep(1)
 
+
 def waitThenCleanup3(ct1, ct2, ct3):
   ct1.reload()
   while ct1.status != 'exited':
@@ -35,6 +40,7 @@ def waitThenCleanup3(ct1, ct2, ct3):
   ct2.remove(force=True)
   ct1.remove()
   time.sleep(1)
+
 
 def waitThenCleanup4(ct1, ct2, ct3, ct4):
   ct1.reload()

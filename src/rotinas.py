@@ -4,6 +4,8 @@ import interferencia as Interferencia
 import concorrencia as Concorrencia
 # import trafegoDc as TrafegoDc
 
+
+
 # Teste Referência
 def referencia(driver, cfgIndex, cfg, logDir):
   if driver == 'host':
@@ -20,7 +22,7 @@ def referencia(driver, cfgIndex, cfg, logDir):
 
 
 # Teste Interferência
-def interferencia(driver, cfgIndex, cfg, logDir):  
+def interferencia(driver, cfgIndex, cfg, logDir):
   if driver == 'host':
     Interferencia.rodar_host(cfg[0], cfg[1], cfg[2], logDir)
   elif driver == 'bridge':
@@ -33,16 +35,18 @@ def interferencia(driver, cfgIndex, cfg, logDir):
   elif driver == 'overlay':
     Interferencia.rodar_overlay(cfg[0], cfg[1], cfg[2], logDir)
 
-    
+
 # Teste Concorrência
-def concorrencia(driver, cfgIndex, cfg, logDir):  
+def concorrencia(driver, cfgIndex, cfg, logDir):
   if driver == 'host':
     Concorrencia.rodar_host(cfg[0], cfg[1], cfg[2], cfg[3], logDir)
   elif driver == 'bridge':
     if (cfgIndex == 1):
-      Concorrencia.rodar_bridge_cfg1(cfg[0], cfg[1], cfg[2], cfg[3], logDir)
+      Concorrencia.rodar_bridge_cfg1(
+          cfg[0], cfg[1], cfg[2], cfg[3], logDir)
     else:
-      Concorrencia.rodar_bridge_cfg23(cfg[0], cfg[1], cfg[2], cfg[3], logDir)
+      Concorrencia.rodar_bridge_cfg23(
+          cfg[0], cfg[1], cfg[2], cfg[3], logDir)
   elif driver == 'macvlan':
     Concorrencia.rodar_macvlan(cfg[0], cfg[1], cfg[2], cfg[3], logDir)
   elif driver == 'overlay':

@@ -15,9 +15,9 @@ then
 
   # Iniciar coleta de dados dos hospedeiros
   for i in $(seq 1 6); do
-    ssh dh-$i "mpstat -o JSON 1 > ~/mpstat.json &"
+    ssh dh-$i "mpstat -o JSON 1 > ~/mpstat_dh-${i}_$(date --iso-8601).json &"
   done
-  
+
   # Rodar bateria de testes
   python3 src/runTests.py
 
