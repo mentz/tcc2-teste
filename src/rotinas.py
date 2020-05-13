@@ -2,8 +2,7 @@ import docker
 import referencia as Referencia
 import interferencia as Interferencia
 import concorrencia as Concorrencia
-# import trafegoDc as TrafegoDc
-
+# import trafegoDC as TrafegoDC
 
 
 # Teste Referência

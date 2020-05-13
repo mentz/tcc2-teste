@@ -31,6 +31,10 @@ cfg4 = [dh1, dh1, dh2, dh5]
 # configuracoes = [cfg1, cfg2, cfg3, cfg4]
 configuracoes = [cfg1, cfg2, cfg3]
 
+# Definição de testes a executar
+# testes = ['referencia', 'interferencia', 'concorrencia', 'trafegoDC']
+testes = ['concorrencia']
+
 # Limpeza dos Docker Hosts
 for host in dhList:
   # Remover contêineres
@@ -86,27 +90,35 @@ for iteracao in range(1, config.iteracoes + 1):
     for (cfgIndex, cfg) in enumerate(configuracoes, start=1):
       # Somente o teste Tráfego de DC usa a quarta configuração
       if (cfg != cfg4):
-        # # Teste Referência
-        # print('[REFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
-        # logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'referencia', driver, cfgIndex, iteracao)
-        # rotinas.referencia(driver, cfgIndex, cfg, logDir)
+        # Teste Referência
+        if 'referencia' in testes:
+          print('[REFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' %
+                (driver, cfgIndex, iteracao))
+          logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
+              curDir, 'referencia', driver, cfgIndex, iteracao)
+          rotinas.referencia(driver, cfgIndex, cfg, logDir)
 
-        # # Teste Interferência
-        # print('[INTERFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
-        # logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (curDir, 'interferencia', driver, cfgIndex, iteracao)
-        # rotinas.interferencia(driver, cfgIndex, cfg, logDir)
+        # Teste Interferência
+        if 'interferencia' in testes:
+          print('[INTERFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' %
+                (driver, cfgIndex, iteracao))
+          logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
+              curDir, 'interferencia', driver, cfgIndex, iteracao)
+          rotinas.interferencia(driver, cfgIndex, cfg, logDir)
 
         # Teste Concorrência
-        print('[CONCORRENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' %
-              (driver, cfgIndex, iteracao))
-        logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
-            curDir, 'concorrencia', driver, cfgIndex, iteracao)
-        rotinas.concorrencia(driver, cfgIndex, cfg, logDir)
-
-      # # Somente o teste Tráfego de DC usa a quarta configuração
-      # else:
-      #     # Teste Tráfego de DC
-      #     print('[TRAFEGODC, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
-      #     logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
-      #       curDir, 'trafegoDC', driver, cfgIndex, iteracao)
-      #     rotinas.trafegoDC(driver, cfgIndex, cfg, logDir)
+        if 'concorrencia' in testes:
+          print('[CONCORRENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' %
+                (driver, cfgIndex, iteracao))
+          logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
+              curDir, 'concorrencia', driver, cfgIndex, iteracao)
+          rotinas.concorrencia(driver, cfgIndex, cfg, logDir)
+      
+      # Somente o teste Tráfego de DC usa a quarta configuração
+      else:
+        # Teste Tráfego de DC
+        if 'trafegoDC' in testes:
+          print('[TRAFEGODC, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
+          logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
+            curDir, 'trafegoDC', driver, cfgIndex, iteracao)
+          rotinas.trafegoDC(driver, cfgIndex, cfg, logDir)
