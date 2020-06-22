@@ -10,13 +10,13 @@ then
 
   # Garantir que não há mpstat de outra execução
   for i in $(seq 1 6); do
-    ssh dh$i "killall mpstat"
+    ssh dh-$i "killall mpstat"
   done
 
   # Iniciar coleta de dados dos hospedeiros
   date=$(date --iso-8601)
   for i in $(seq 1 6); do
-    ssh dh$i "mpstat -o JSON 1 > ~/mpstat_dh-${i}_${date}.json &"
+    ssh dh-$i "mpstat -o JSON 1 > ~/mpstat_dh-${i}_${date}.json &"
   done
 
   # Rodar bateria de testes
@@ -24,8 +24,8 @@ then
 
   # Encerrar coleta de dados e agregar nessa pasta
   for i in $(seq 1 6); do
-    ssh dh$i "killall mpstat"
-    scp dh$i:~/mpstat_dh-${i}_${date}.json results/.
+    ssh dh-$i "killall mpstat"
+    scp dh-$i:~/mpstat_dh-${i}_${date}.json results/.
   done
 else
   echo 'Já existem resultados de outra execução.'
