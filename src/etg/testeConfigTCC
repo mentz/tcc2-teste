@@ -1,0 +1,7 @@
+server 10.11.10.92 5000
+server 10.11.13.191 5000
+server 10.11.13.82 5000
+req_size_dist PRV2_1_CDF
+fanout 1 100
+load 1000Mbps
+num_reqs 10000

@@ -7,9 +7,9 @@ from pathlib import Path
 
 
 class DockerHost:
-  def __init__(self, ipAddr):
-    self.ipAddr = ipAddr
-    self.docker = docker.DockerClient(base_url='tcp://%s:2376' % ipAddr)
+    def __init__(self, ipAddr):
+        self.ipAddr = ipAddr
+        self.docker = docker.DockerClient(base_url='tcp://%s:2376' % ipAddr)
 
 
 # Definição de clientes Docker (controle dos hosts Docker, um em cada VM)
@@ -29,54 +29,54 @@ cfg2 = [dh1, dh2, dh3, dh4]
 cfg3 = [dh1, dh5, dh2, dh6]
 cfg4 = [dh1, dh1, dh2, dh5]
 # configuracoes = [cfg1, cfg2, cfg3, cfg4]
-configuracoes = [cfg1, cfg2, cfg3]
+configuracoes = [cfg1, cfg2, cfg3, cfg4]
 
 # Definição de testes a executar
 # testes = ['referencia', 'interferencia', 'concorrencia', 'trafegoDC']
-testes = ['concorrencia']
+testes = ['trafegoDC']
 
 # Limpeza dos Docker Hosts
 for host in dhList:
-  # Remover contêineres
-  utils.purgeContainers(host.docker)
-  # Remover redes de usuário
-  utils.purgeUserNetworks(host.docker)
+    # Remover contêineres
+    utils.purgeContainers(host.docker)
+    # Remover redes de usuário
+    utils.purgeUserNetworks(host.docker)
 
 # Preparação dos Docker Hosts (criação de redes)
 overlayExists = False
 for (idx, host) in enumerate(dhList):
-  bridgeExists = False
-  macvlanExists = False
+    bridgeExists = False
+    macvlanExists = False
 
-  # Rede Bridge
-  for nw in host.docker.networks.list():
-    if (nw.name == config.nwName_bridge):
-      bridgeExists = True
-  if (not bridgeExists):
-    host.docker.networks.create(name=config.nwName_bridge, driver='bridge')
+    # Rede Bridge
+    for nw in host.docker.networks.list():
+        if (nw.name == config.nwName_bridge):
+            bridgeExists = True
+    if (not bridgeExists):
+        host.docker.networks.create(name=config.nwName_bridge, driver='bridge')
 
-  # Rede Macvlan
-  for nw in host.docker.networks.list():
-    if (nw.name == config.nwName_macvlan):
-      macvlanExists = True
-  if (not macvlanExists):
-    host.docker.networks.create(
-        name=config.nwName_macvlan,
-        driver='macvlan',
-        ipam=config.ipam_config[idx],
-        options={'parent': config.hosts[idx]['eth_interface']})
+    # Rede Macvlan
+    for nw in host.docker.networks.list():
+        if (nw.name == config.nwName_macvlan):
+            macvlanExists = True
+    if (not macvlanExists):
+        host.docker.networks.create(
+            name=config.nwName_macvlan,
+            driver='macvlan',
+            ipam=config.ipam_config[idx],
+            options={'parent': config.hosts[idx]['eth_interface']})
 
-  # Rede Overlay
-  for nw in host.docker.networks.list():
-    if (nw.name == config.nwName_overlay):
-      overlayExists = True
+    # Rede Overlay
+    for nw in host.docker.networks.list():
+        if (nw.name == config.nwName_overlay):
+            overlayExists = True
 
 # Criar rede Overlay (uma para todos os hosts)
 if (not overlayExists):
-  dh1.docker.networks.create(
-      name=config.nwName_overlay,
-      driver='overlay',
-      attachable=True)
+    dh1.docker.networks.create(
+        name=config.nwName_overlay,
+        driver='overlay',
+        attachable=True)
 
 # Scripts para usar como referência
 # https://github.com/uktrade/docker-overlay-network-benchmark/tree/master/scripts
@@ -86,39 +86,40 @@ if (not overlayExists):
 curDir = os.getcwd()
 
 for iteracao in range(1, config.iteracoes + 1):
-  for driver in drivers:
-    for (cfgIndex, cfg) in enumerate(configuracoes, start=1):
-      # Somente o teste Tráfego de DC usa a quarta configuração
-      if (cfg != cfg4):
-        # Teste Referência
-        if 'referencia' in testes:
-          print('[REFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' %
-                (driver, cfgIndex, iteracao))
-          logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
-              curDir, 'referencia', driver, cfgIndex, iteracao)
-          rotinas.referencia(driver, cfgIndex, cfg, logDir)
+    for driver in drivers:
+        for (cfgIndex, cfg) in enumerate(configuracoes, start=1):
+            # Somente o teste Tráfego de DC usa a quarta configuração
+            if (cfg != cfg4):
+                # Teste Referência
+                if 'referencia' in testes:
+                    print('[REFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' %
+                          (driver, cfgIndex, iteracao))
+                    logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
+                        curDir, 'referencia', driver, cfgIndex, iteracao)
+                    rotinas.referencia(driver, cfgIndex, cfg, logDir)
 
-        # Teste Interferência
-        if 'interferencia' in testes:
-          print('[INTERFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' %
-                (driver, cfgIndex, iteracao))
-          logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
-              curDir, 'interferencia', driver, cfgIndex, iteracao)
-          rotinas.interferencia(driver, cfgIndex, cfg, logDir)
+                # Teste Interferência
+                if 'interferencia' in testes:
+                    print('[INTERFERENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' %
+                          (driver, cfgIndex, iteracao))
+                    logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
+                        curDir, 'interferencia', driver, cfgIndex, iteracao)
+                    rotinas.interferencia(driver, cfgIndex, cfg, logDir)
 
-        # Teste Concorrência
-        if 'concorrencia' in testes:
-          print('[CONCORRENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' %
-                (driver, cfgIndex, iteracao))
-          logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
-              curDir, 'concorrencia', driver, cfgIndex, iteracao)
-          rotinas.concorrencia(driver, cfgIndex, cfg, logDir)
-      
-      # Somente o teste Tráfego de DC usa a quarta configuração
-      else:
-        # Teste Tráfego de DC
-        if 'trafegoDC' in testes:
-          print('[TRAFEGODC, DRIVER %s, CFG %d, ITERACAO %2d]' % (driver, cfgIndex, iteracao))
-          logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
-            curDir, 'trafegoDC', driver, cfgIndex, iteracao)
-          rotinas.trafegoDC(driver, cfgIndex, cfg, logDir)
+                # Teste Concorrência
+                if 'concorrencia' in testes:
+                    print('[CONCORRENCIA, DRIVER %s, CFG %d, ITERACAO %2d]' %
+                          (driver, cfgIndex, iteracao))
+                    logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
+                        curDir, 'concorrencia', driver, cfgIndex, iteracao)
+                    rotinas.concorrencia(driver, cfgIndex, cfg, logDir)
+
+            # Somente o teste Tráfego de DC usa a quarta configuração
+            else:
+                # Teste Tráfego de DC
+                if 'trafegoDC' in testes:
+                    print('[TRAFEGODC, DRIVER %s, CFG %d, ITERACAO %2d]' %
+                          (driver, cfgIndex, iteracao))
+                    logDir = '%s/results/cenario_%s/driver_%s/cfg%d/iter%02d' % (
+                        curDir, 'trafegoDC', driver, cfgIndex, iteracao)
+                    rotinas.trafegoDC(driver, cfgIndex, cfg, logDir)

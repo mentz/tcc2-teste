@@ -1,17 +1,27 @@
 # Os parâmetros abaixo devem ser ajustados para conformar ao seu setup
 import docker
-hosts = [{'ip': '172.16.25.5', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.15', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.9', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.11', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.20', 'eth_interface': 'ens3'},
-         {'ip': '172.16.25.14', 'eth_interface': 'ens3'}]
+hosts = [{'ip': '10.11.10.92', 'eth_interface': 'ens3'},
+         {'ip': '10.11.13.191', 'eth_interface': 'ens3'},
+         {'ip': '10.11.13.77', 'eth_interface': 'ens3'},
+         {'ip': '10.11.10.158', 'eth_interface': 'ens3'},
+         {'ip': '10.11.13.82', 'eth_interface': 'ens3'},
+         {'ip': '10.11.10.170', 'eth_interface': 'ens3'}]
 
 # Os parâmetros abaixo modificam as variáveis dos testes
 iteracoes = 20
 testDuration = 120
 bgBefore = 10
 bgAfter = 10
+
+etgClientSeed = "1109835023"
+etgConfigDefault = """server {} 5000
+server {} 5000
+server {} 5000
+req_size_dist /root/PRV2_1_CDF
+fanout 1 100
+load 1000Mbps
+num_reqs 10000
+"""
 
 ###
 # Evite fazer modificações além daqui
