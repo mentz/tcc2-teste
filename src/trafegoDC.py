@@ -27,17 +27,11 @@ def rodar_host(cliente, servidor1, servidor2, servidor3, logDir):
 
     etgConfig = config.etgConfigDefault.format(
         servidor1.ipAddr, servidor2.ipAddr, servidor3.ipAddr)
-    print(etgConfig)
-    return
 
     c1 = cliente.docker.containers.run(
         image="mentz/tcc:latest",
         network="host",
-        command="cat <<EOF\
-			{}\
-			EOF >> /root/etgConfig;\
-			/root/etg-client -c /root/etgConfig / -log host;\
-			mv /root/*.out /mnt/log/.".format(etgConfig),
+        command=config.etgTestCommand.format(etgConfig, config.etgClientSeed),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
 
@@ -72,22 +66,16 @@ def rodar_bridge(cliente, servidor1, servidor2, servidor3, logDir):
         detach=True)
 
     # Obter endereço IP do contêiner co-hospedado (s1)
-    s1_inspect = servidor.docker.api.inspect_container(s1.id)
+    s1_inspect = servidor1.docker.api.inspect_container(s1.id)
     s1_ip = s1_inspect['NetworkSettings']['Networks'][config.nwName_bridge]['IPAddress']
 
     etgConfig = config.etgConfigDefault.format(
         s1_ip, servidor2.ipAddr, servidor3.ipAddr)
-    print(etgConfig)
-    return
 
     c1 = cliente.docker.containers.run(
         image="mentz/tcc:latest",
         network=config.nwName_bridge,
-        command="cat <<EOF\
-			{}\
-			EOF >> /root/etgConfig;\
-			/root/etg-client -c /root/etgConfig / -log host;\
-			mv /root/*.out /mnt/log/.".format(etgConfig),
+        command=config.etgTestCommand.format(etgConfig, config.etgClientSeed),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
 
@@ -120,25 +108,19 @@ def rodar_macvlan(cliente, servidor1, servidor2, servidor3, logDir):
         detach=True)
 
     # Obter endereço IP dos contêineres na MacVLan
-    s1_inspect = servidor.docker.api.inspect_container(s1.id)
+    s1_inspect = servidor1.docker.api.inspect_container(s1.id)
     s1_ip = s1_inspect['NetworkSettings']['Networks'][config.nwName_macvlan]['IPAddress']
-    s2_inspect = servidor.docker.api.inspect_container(s2.id)
+    s2_inspect = servidor2.docker.api.inspect_container(s2.id)
     s2_ip = s2_inspect['NetworkSettings']['Networks'][config.nwName_macvlan]['IPAddress']
-    s3_inspect = servidor.docker.api.inspect_container(s3.id)
+    s3_inspect = servidor3.docker.api.inspect_container(s3.id)
     s3_ip = s3_inspect['NetworkSettings']['Networks'][config.nwName_macvlan]['IPAddress']
 
     etgConfig = config.etgConfigDefault.format(s1_ip, s2_ip, s3_ip)
-    print(etgConfig)
-    return
 
     c1 = cliente.docker.containers.run(
         image="mentz/tcc:latest",
         network=config.nwName_macvlan,
-        command="cat <<EOF\
-			{}\
-			EOF >> /root/etgConfig;\
-			/root/etg-client -c /root/etgConfig / -log host;\
-			mv /root/*.out /mnt/log/.".format(etgConfig),
+        command=config.etgTestCommand.format(etgConfig, config.etgClientSeed),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
 
@@ -171,25 +153,19 @@ def rodar_overlay(cliente, servidor1, servidor2, servidor3, logDir):
         detach=True)
 
     # Obter endereço IP dos contêineres na MacVLan
-    s1_inspect = servidor.docker.api.inspect_container(s1.id)
+    s1_inspect = servidor1.docker.api.inspect_container(s1.id)
     s1_ip = s1_inspect['NetworkSettings']['Networks'][config.nwName_overlay]['IPAddress']
-    s2_inspect = servidor.docker.api.inspect_container(s2.id)
+    s2_inspect = servidor2.docker.api.inspect_container(s2.id)
     s2_ip = s2_inspect['NetworkSettings']['Networks'][config.nwName_overlay]['IPAddress']
-    s3_inspect = servidor.docker.api.inspect_container(s3.id)
+    s3_inspect = servidor3.docker.api.inspect_container(s3.id)
     s3_ip = s3_inspect['NetworkSettings']['Networks'][config.nwName_overlay]['IPAddress']
 
     etgConfig = config.etgConfigDefault.format(s1_ip, s2_ip, s3_ip)
-    print(etgConfig)
-    return
 
     c1 = cliente.docker.containers.run(
         image="mentz/tcc:latest",
         network=config.nwName_overlay,
-        command="cat <<EOF\
-			{}\
-			EOF >> /root/etgConfig;\
-			/root/etg-client -c /root/etgConfig / -log host;\
-			mv /root/*.out /mnt/log/.".format(etgConfig),
+        command=config.etgTestCommand.format(etgConfig, config.etgClientSeed),
         volumes={logDir: {'bind': '/mnt/log', 'mode': 'rw'}},
         detach=True)
 

@@ -20,7 +20,14 @@ server {} 5000
 req_size_dist /root/PRV2_1_CDF
 fanout 1 100
 load 1000Mbps
-num_reqs 10000
+num_reqs 100000"""
+etgTestCommand = """bash -c '{{
+cat <<HERE
+{}
+HERE
+}} | tee /root/etgConfig
+/root/etg-client -c /root/etgConfig -s {} > etgrun.log
+mv etgrun.log log_flows.out log_reqs.out /mnt/log/.'
 """
 
 ###
