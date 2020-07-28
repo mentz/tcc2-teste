@@ -1,6 +1,6 @@
 import time
 import config
-from utils import timePrint, waitThenCleanup
+from utils import timePrint, waitThenCleanup4
 
 
 def rodar_host(cliente, servidor1, servidor2, servidor3, logDir):
@@ -43,7 +43,7 @@ def rodar_host(cliente, servidor1, servidor2, servidor3, logDir):
 
     # Aguardar encerramento do teste
     # time.sleep(config.testDuration)
-    waitThenCleanup(c1, s1, s2, s3)
+    waitThenCleanup4(c1, s1, s2, s3)
     timePrint("TrafegoDC [DONE]")
 
 
@@ -93,7 +93,7 @@ def rodar_bridge(cliente, servidor1, servidor2, servidor3, logDir):
 
     # Aguardar encerramento do teste
     # time.sleep(config.testDuration)
-    waitThenCleanup(c1, s1, s2, s3)
+    waitThenCleanup4(c1, s1, s2, s3)
     timePrint("TrafegoDC [DONE]")
 
 
@@ -144,7 +144,7 @@ def rodar_macvlan(cliente, servidor1, servidor2, servidor3, logDir):
 
     # Aguardar encerramento do teste
     # time.sleep(config.testDuration)
-    waitThenCleanup(c1, s1, s2, s3)
+    waitThenCleanup4(c1, s1, s2, s3)
     timePrint("TrafegoDC [DONE]")
 
 
@@ -195,5 +195,5 @@ def rodar_overlay(cliente, servidor1, servidor2, servidor3, logDir):
 
     # Aguardar encerramento do teste
     # time.sleep(config.testDuration)
-    waitThenCleanup(c1, s1, s2, s3)
+    waitThenCleanup4(c1, s1, s2, s3)
     timePrint("TrafegoDC [DONE]")
