@@ -1,11 +1,11 @@
 # Os parâmetros abaixo devem ser ajustados para conformar ao seu setup
 import docker
-hosts = [{'ip': '10.11.10.92', 'eth_interface': 'ens3'},
-         {'ip': '10.11.13.191', 'eth_interface': 'ens3'},
-         {'ip': '10.11.13.77', 'eth_interface': 'ens3'},
-         {'ip': '10.11.10.158', 'eth_interface': 'ens3'},
-         {'ip': '10.11.13.82', 'eth_interface': 'ens3'},
-         {'ip': '10.11.10.170', 'eth_interface': 'ens3'}]
+hosts = [{'ip': '10.11.13.182', 'eth_interface': 'ens3'},
+         {'ip': '10.11.13.56', 'eth_interface': 'ens3'},
+         {'ip': '10.11.13.197', 'eth_interface': 'ens3'},
+         {'ip': '10.11.12.14', 'eth_interface': 'ens3'},
+         {'ip': '10.11.11.15', 'eth_interface': 'ens3'},
+         {'ip': '10.11.10.180', 'eth_interface': 'ens3'}]
 
 # Os parâmetros abaixo modificam as variáveis dos testes
 iteracoes = 20
